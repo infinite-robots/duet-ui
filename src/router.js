@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Onboarding from './pages/Onboarding.vue'
-import BandSwiper from './pages/BandSwiper.vue'
+import Swiper from './pages/Swiper.vue'
+import Chat from './pages/Chat.vue'
 
 Vue.use(Router)
 
@@ -21,9 +22,14 @@ export default new Router({
       component: Onboarding
     },
     {
-      path: '/bands',
-      name: 'bands',
-      component: BandSwiper
+      path: '/swiper',
+      name: 'swiper',
+      component: Swiper
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat
     },
     {
       path: '/about',

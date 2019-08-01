@@ -20,7 +20,7 @@ import CardStack from '@/components/CardStack.vue'
 import SwipeTools from '@/components/SwipeTools.vue'
 
 export default {
-  name: 'BandSwiper',
+  name: 'Swiper',
   components: { Modal, AppShell, CardStack, SwipeTools },
   data() {
     return {

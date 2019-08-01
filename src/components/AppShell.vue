@@ -1,9 +1,9 @@
 <template>
   <div class="app-shell">
     <div class="app-header">
-      <i class="material-icons">account_circle</i>
-      <img src="../assets/duet_logo_color.png" />
-      <i class="material-icons">chat</i>
+      <router-link to="/onboarding"><i class="material-icons">account_circle</i></router-link>
+      <router-link to="/swiper"><img src="../assets/duet_logo_color.png" /></router-link>
+      <router-link to="/chat"><i class="material-icons">chat</i></router-link>
     </div>
     <div class="app-content">
       <slot></slot>

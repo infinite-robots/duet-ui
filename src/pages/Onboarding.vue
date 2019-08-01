@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <router-link class="button main-button" to="/bands">Continue</router-link>
+      <router-link class="button main-button" to="/swiper">Continue</router-link>
     </div>
   </div>
 </template>
