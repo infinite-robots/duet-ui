@@ -22,6 +22,6 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
-  height: calc(100vh - 123px);
+  height: calc(100vh - 158px);
 }
 </style>

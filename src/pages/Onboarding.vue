@@ -1,5 +1,6 @@
 <template>
   <div class="onboarding app-page">
+    <loader v-if="busy"></loader>
     <div class="card">
       <p>Tell us a little about yourself.</p>
       <input class="input" type="text" placeholder="Choose a username">
@@ -35,6 +36,7 @@ export default {
   name: 'onboarding',
   data() {
     return {
+      busy: false,
       ages: Array.from({ length: 49 }, (_, i) => i + 18)
     }
   }

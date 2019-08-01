@@ -4,6 +4,7 @@ import Home from './pages/Home.vue'
 import Onboarding from './pages/Onboarding.vue'
 import Swiper from './pages/Swiper.vue'
 import Chat from './pages/Chat.vue'
+import { requireAuth } from './services/auth';
 
 Vue.use(Router)
 
@@ -24,12 +25,14 @@ export default new Router({
     {
       path: '/swiper',
       name: 'swiper',
-      component: Swiper
+      component: Swiper,
+      // beforeEnter: requireAuth
     },
     {
       path: '/chat',
       name: 'chat',
-      component: Chat
+      component: Chat,
+      // beforeEnter: requireAuth
     },
     {
       path: '/about',
