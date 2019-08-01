@@ -1,5 +1,5 @@
 <template>
-  <div class="swipe-card">
+  <div class="swipe-card" :style="{ transform: transformString }" ref="interactElement">
     <div class="img-wrap">
       <img src="../assets/band2.jpg" />
       <div class="swipe-card-info">
@@ -11,8 +11,49 @@
 </template>
 
 <script>
+import interact from 'interactjs';
+
 export default {
   name: 'SwipeCard',
+  data() {
+    return {
+      interactPosition: {
+        x: 0,
+        y: 0
+      },
+    }
+  },
+  computed: {
+    transformString() {
+      const { x, y } = this.interactPosition;
+      return `translate3D(${x}px, ${y}px, 0)`;
+    }
+  },
+  mounted() {
+    const element = this.$refs.interactElement;
+    interact(element).draggable({
+      onmove: event => {
+        const x = this.interactPosition.x + event.dx;
+        const y = this.interactPosition.y + event.dy;
+        this.interactSetPosition({ x, y });
+      },
+      onend: () => {
+        this.resetCardPosition();
+      }
+    });
+  },
+  beforeDestroy() {
+    interact(this.$refs.interactElement).unset();
+  },
+  methods: {
+    interactSetPosition(coordinates) { 
+      const { x = 0, y = 0 } = coordinates;
+      this.interactPosition = { x, y };
+    },
+    resetCardPosition() {
+      this.interactSetPosition({ x: 0, y: 0 });
+    },
+  }
 }
 </script>
 
