@@ -4,7 +4,10 @@
       <p>Instead of building a traditional profile, we're going to present you with some bands and artists. Just swipe left or right to indicate if you like them or not, and we'll do the rest!</p>
     </Modal> -->
     <app-shell>
-      <swipe-card></swipe-card>
+      <card-stack :cards="cards"
+        @cardAccepted="handleCardAccepted"
+        @cardRejected="handleCardRejected"
+      ></card-stack>
       <swipe-tools></swipe-tools>
     </app-shell>
   </div>
@@ -13,12 +16,12 @@
 <script>
 import Modal from '@/components/Modal.vue'
 import AppShell from '@/components/AppShell.vue'
-import SwipeCard from '@/components/SwipeCard.vue'
+import CardStack from '@/components/CardStack.vue'
 import SwipeTools from '@/components/SwipeTools.vue'
 
 export default {
   name: 'BandSwiper',
-  components: { Modal, AppShell, SwipeCard, SwipeTools },
+  components: { Modal, AppShell, CardStack, SwipeTools },
   data() {
     return {
       cards: [
@@ -28,6 +31,14 @@ export default {
         {name: 'Gorillaz'},
         {name: 'Eminem'},
       ]
+    }
+  },
+  methods: {
+    handleCardAccepted() {
+      this.cards.shift();
+    },
+    handleCardRejected() {
+      this.cards.shift();
     }
   }
 }
