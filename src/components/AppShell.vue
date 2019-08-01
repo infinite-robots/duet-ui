@@ -1,9 +1,9 @@
 <template>
   <div class="app-shell">
     <div class="app-header">
-      <i class="material-icons">account_box</i>
+      <i class="material-icons">account_circle</i>
       <img src="../assets/duet_logo_color.png" />
-      <i class="material-icons">chat_bubble</i>
+      <i class="material-icons">chat</i>
     </div>
     <div class="app-content">
       <slot></slot>
@@ -34,23 +34,23 @@ export default {
   align-items: center;
   justify-content: space-between;
   height: 64px;
-  -webkit-box-shadow: 0px 1px 5px 6px rgba(0,0,0,0.12);
-  -moz-box-shadow: 0px 1px 5px 6px rgba(0,0,0,0.12);
-  box-shadow: 0px 1px 5px 6px rgba(0,0,0,0.12);
+  -webkit-box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.12);
+  box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.12);
   padding: 0 16px;
   z-index: 99;
   position: fixed;
   width: 100%;
 
   img {
-    height: 32px;
+    height: 30px;
     width: auto;
     cursor: pointer;
   }
 
   i {
-    font-size: 32px;
-    color: #808080;
+    font-size: 30px;
+    color: #cccccc;
     cursor: pointer;
 
     &:hover {
