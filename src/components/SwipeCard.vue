@@ -101,7 +101,8 @@ export default {
   position: absolute;
   padding: 8px;
   border-radius: 5px;
-  max-width: 420px;
+  // max-width: 420px;
+  width: 100%;
   margin: 4px auto 0;
 
   &.isCurrent {
