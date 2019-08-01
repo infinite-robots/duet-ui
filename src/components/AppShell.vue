@@ -3,7 +3,7 @@
     <div class="app-header">
       <router-link to="/onboarding"><i class="material-icons">account_circle</i></router-link>
       <router-link to="/swiper"><img src="../assets/duet_logo_color.png" /></router-link>
-      <router-link to="/chat"><i class="material-icons">chat</i></router-link>
+      <router-link to="/matches"><i class="material-icons">chat</i></router-link>
     </div>
     <div class="app-content">
       <slot></slot>
