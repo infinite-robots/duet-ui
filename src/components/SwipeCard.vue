@@ -98,12 +98,14 @@ export default {
 
 <style lang="scss">
 .swipe-card {
+  height: calc(100vh - 200px);
   position: absolute;
-  padding: 8px;
+  // padding: 8px;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
   border-radius: 5px;
   // max-width: 420px;
-  width: 100%;
-  margin: 4px auto 0;
+  width: calc(100% - 16px);
+  margin: 8px auto 0;
 
   &.isCurrent {
     pointer-events: auto;
@@ -127,7 +129,7 @@ $cardsTotal: 5;
 }
 .img-wrap {
   position: relative;
-  height: calc(100vh - 194px);
+  height: calc(100vh - 200px);
   // border: 5px solid red;
   border-radius: 5px;
   width: 100%;

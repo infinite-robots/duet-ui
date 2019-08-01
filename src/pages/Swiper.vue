@@ -8,7 +8,11 @@
         @cardAccepted="handleCardAccepted"
         @cardRejected="handleCardRejected"
       ></card-stack>
-      <swipe-tools></swipe-tools>
+      <swipe-tools v-if="cards[0].type === 'normal'"></swipe-tools>
+      <div v-else class="battle-hint">
+        <p>Battle of the Bands!</p>
+        <p>Select which band you like better.</p>
+      </div>
     </app-shell>
   </div>
 </template>
@@ -25,11 +29,11 @@ export default {
   data() {
     return {
       cards: [
-        {name: 'Tool'},
-        {name: 'Nine Inch Nails'},
-        {name: 'The Beatles'},
-        {name: 'Gorillaz'},
-        {name: 'Eminem'},
+        {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
+        {name: 'Nine Inch Nails', type: 'normal'},
+        {name: 'The Beatles', type: 'normal'},
+        {name: 'Gorillaz', type: 'normal'},
+        {name: 'Eminem', type: 'normal'},
       ]
     }
   },
@@ -45,5 +49,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+.battle-hint {
+  p:first-child {
+    color: #b40d7a;
+    font-weight: 600;
+  }
+}
 </style>
