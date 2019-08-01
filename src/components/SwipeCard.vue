@@ -126,12 +126,14 @@ $cardsTotal: 5;
 }
 .img-wrap {
   position: relative;
-  height: calc(100vh - 184px);
+  height: calc(100vh - 194px);
   // border: 5px solid red;
   border-radius: 5px;
+  width: 100%;
   img {
     border-radius: 5px;
     height: 100%;
+    width: auto;
     object-fit: cover;
   }
 }
