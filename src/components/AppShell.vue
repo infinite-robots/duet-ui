@@ -12,14 +12,27 @@
 </template>
 
 <script>
+import { longPoll } from '../services/api';
+
 export default {
   name: 'AppShell',
   data() {
     return {
-      closed: false
+      closed: false,
+      longPoll: undefined,
     }
   },
+  mounted() {
+    this.longPoll = setInterval(() => {
+      longPoll().then(resp => {
+        console.log(resp);
+      })
+    }, 1000);
+  },
   methods: {
+  },
+  beforeDestroy() {
+    clearInterval(this.longPoll);
   }
 }
 </script>
