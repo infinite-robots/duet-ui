@@ -13,7 +13,6 @@
           </select>
         </div>
       </div>
-
       <div class="select-wrap">
         <div class="select">
           <select v-model="selectedGender">
