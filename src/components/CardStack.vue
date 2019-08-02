@@ -1,19 +1,26 @@
 <template>
   <div class="card-stack">
-    <swipe-card v-for="card in cards" :key="card.name" :card="card"
-      @cardAccepted="$emit('cardAccepted');"
-      @cardRejected="$emit('cardRejected');"
-    ></swipe-card>
+    <template v-for="card in cards">
+      <swipe-card :key="card.name" v-if="card.type === 'normal'" :card="card"
+        @cardAccepted="$emit('cardAccepted');"
+        @cardRejected="$emit('cardRejected');"
+      ></swipe-card>
+      <battle-card :key="card.band1.name" v-if="card.type === 'battle'" :card="card"
+        @cardAccepted="$emit('cardAccepted');"
+        @cardRejected="$emit('cardRejected');"
+      ></battle-card>
+    </template>
   </div>
 </template>
 
 <script>
 import SwipeCard from '@/components/SwipeCard.vue'
+import BattleCard from '@/components/BattleCard.vue'
 
 export default {
   name: 'CardStack',
   props: ['cards'],
-  components: { SwipeCard }
+  components: { SwipeCard, BattleCard }
 }
 </script>
 
@@ -22,6 +29,6 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
-  height: calc(100vh - 168px);
+  height: calc(100vh - 165px);
 }
 </style>
