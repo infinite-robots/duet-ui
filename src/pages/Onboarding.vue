@@ -31,8 +31,10 @@
 </template>
 
 <script>
-import {createUser} from "../services/api";
+import { createUser } from "../services/api";
 import router from '../router'
+import { setUser } from '../services/auth';
+
 export default {
   name: 'onboarding',
   data() {
@@ -43,7 +45,8 @@ export default {
       name: undefined,
       ages: Array.from({ length: 49 }, (_, i) => i + 18)
     }
-  },methods: {
+  },
+  methods: {
     saveUser() {
       let user = {
         name: this.name,
@@ -53,11 +56,10 @@ export default {
       };
       this.busy = true;
       createUser(user).then(value => {
-        router.push({
-          path: '/swiper',
-
-        });
         this.busy = false;
+        console.log(value);
+        setUser(value.data);
+        router.push({ path: '/swiper' });
       })
 
     }

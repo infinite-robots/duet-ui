@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getUser } from './auth';
 
 let apiRoot = 'https://love.duet-api.com';
 
@@ -7,7 +8,8 @@ if(process.env.NODE_ENV == 'dev') {
 }
 
 export function getCards() {
-  return axios.get(`${apiRoot}/cards/1`);
+  const user = getUser();
+  return axios.get(`${apiRoot}/cards/${user.id}`);
 }
 
 
@@ -19,15 +21,17 @@ export function createUser(user) {
  * type = 'person' or 'band'
  */
 export function swipeCard(type, genre, userId, cardId, swipe) {
+  const user = getUser();
   return axios.post(`${apiRoot}/cards/swipe`, {
     type,
     genre,
-    userId,
+    userId: user.id,
     cardId,
     swipe: swipe ? 'right' : 'left'
   });
 }
 
 export function longPoll() {
-  return axios.get(`${apiRoot}/interest-and-chats/1`);
+  const user = getUser();
+  return axios.get(`${apiRoot}/interest-and-chats/${user.id}`);
 }
