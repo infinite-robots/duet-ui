@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <img src="../assets/logo_white.png" class="logo" />
-    <p>Discover people that love the music you love.</p>
-    <router-link to="/onboarding" class="button">Create Account</router-link>
+    <div class="by-iheart">by <img src="../assets/iheart.png" class="ihm-logo"/></div>
+    <p>Discover people that love<br/> the music you love.</p>
+    <router-link to="/onboarding" class="button">Get Started</router-link>
   </div>
 </template>
 
@@ -30,12 +31,21 @@ export default {
   .logo {
     width: 170px;
     height: auto;
-    margin-bottom: 32px;
+  }
+
+  .ihm-logo {
+    width: 120px;
+    height: auto;
+    margin: 0 0 -5px 0;
+  }
+
+  .by-iheart {
+    margin: 20px 0 32px;
+    font-size: 10px;
   }
 
   p {
-    margin-top: 0;
-    margin-bottom: 32px;
+    margin: 0 10px 32px 10px;
   }
 }
 </style>
