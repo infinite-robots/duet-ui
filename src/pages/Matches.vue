@@ -2,16 +2,19 @@
   <div class="chat">
     <app-shell>
       <div class="matches-wrap">
-        <p>Discover New Matches</p>
-        <router-link to="/chat">
-         <div class="match" v-for="match in matches" :key="match.name">
-         <img src="https://images.unsplash.com/photo-1446040945968-d303ecb10b4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" />
-          <div class="match-info">
-            <h3 class="chat-match-name"> {{ match.name }}</h3>
-            <div class="chat-preview">You have a Match. Say "Hello".</div>
-          </div> 
+        <p class="matches-header">Your Matches</p>
+        <div class="m" v-if="matches && matches.length > 0">
+          <div class="match" v-for="match in matches" :key="match.name" @click="chatWith(match.id)">
+            <img :src="match.img" />
+            <div class="match-info">
+              <h3 class="chat-match-name"> {{ match.name }}</h3>
+              <div class="chat-preview">{{ match.lastMessage ? match.lastMessage : 'Say hi to your match'}}</div>
+            </div> 
+          </div>
         </div>
-        </router-link>   
+        <div v-else class="no-matches">
+          <p>No matches yet - keep swiping!</p>
+        </div>
       </div>
     </app-shell>
   </div>
@@ -19,17 +22,30 @@
 
 <script>
 import AppShell from '@/components/AppShell';
+import { getMatches } from '../services/api';
+import router from '../router';
 
 export default {
   name: 'chat',
   components: { AppShell },
   data() {
     return {
-      matches: [
-        {name: 'Sara'},
-        {name: 'Alice'},
-        {name: 'Maria'}
-      ]
+      busy: true,
+      matches: []
+    }
+  },
+  mounted() {
+    getMatches().then(resp => {
+      console.log(resp);
+      this.matches = resp.data;
+      this.busy = false;
+    });
+  },
+  methods: {
+    chatWith(id) {
+      router.push({
+        path: `/chat/${id}`
+      })
     }
   }
 }
@@ -41,7 +57,9 @@ export default {
 
   .match {
     display: flex;
+    border-top: 1px solid #eee;
     border-bottom: 1px solid #eeeeee;
+    cursor: pointer;
 
     img {
       width: 60px;
@@ -51,12 +69,14 @@ export default {
       border: 2px solid #fff;
       box-shadow: 1px 1px 2px #eee;
       float: left;
+      object-fit: cover;
     }
   }
 
-  p {
+  .matches-header {
     padding: 20px;
-    background-color: #fff;
+    color: #b40d7a;
+    font-weight: 600;
   }
 }
 

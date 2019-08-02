@@ -36,7 +36,7 @@ export default new Router({
       // beforeEnter: requireAuth
     },
     {
-      path: '/chat',
+      path: '/chat/:id',
       name: 'chat',
       component: Chat,
       // beforeEnter: requireAuth

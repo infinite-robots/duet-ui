@@ -1,14 +1,20 @@
 <template>
   <div class="chat">
+    <loader v-if="busy"></loader>
     <app-shell>
-      <div class="matches-wrap">
-      <p>Conversation with Matt</p>
-        <div class="match" v-for="match in matches" :key="match.name">
-          <img src="https://images.unsplash.com/photo-1446040945968-d303ecb10b4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" />
-          <div class="">
-            <h3 class="chat-match-name"> {{ match.name }}</h3>
-            <div class="chat-preview">You have a Match. Say "Hello".</div>
+      <div class="chat-wrap">
+
+        <div class="chat-area">
+          <div class="ch" v-for="chat in chats" :key="chat.createdAt" :class="{stranger: chat.userId === userId}">
+          <p>
+            {{ chat.message }}
+          </p>
           </div>
+        </div>
+        
+        <div class="chat-input-wrap">
+          <input type="text" class="msg input" v-model="message" placeholder="say hello to your new friend" />
+          <button class="button main-button" @click="sendMessage()">Send</button>
         </div>
       </div>
     </app-shell>
@@ -17,46 +23,90 @@
 
 <script>
 import AppShell from '@/components/AppShell';
+import { getUserChats, sendChat } from '../services/api';
+import { getUser } from '../services/auth';
 
 export default {
   name: 'chat',
   components: { AppShell },
+  data() {
+    return {
+      busy: true,
+      chats: undefined,
+      message: '',
+      userId: undefined
+    }
+  },
+  mounted() {
+    this.getChats();
+    this.userId = getUser().id;
+  },
+  methods: {
+    sendMessage() {
+      sendChat(this.$route.params.id, this.message).then(resp => {
+        this.message = '';
+        console.log(resp);
+        this.getChats();
+      });
+    },
+    getChats() {
+      getUserChats(this.$route.params.id).then(resp => {
+        console.log(resp.data);
+        this.chats = resp.data.slice(-10);
+        this.busy = false;
+      });
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-.matches-wrap {
+.msg {
+  width: 100%;
+}
+.chat-wrap {
+  padding: 16px;
+}
+.chat-input-wrap {
+  display: flex;
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+
+  input[type="text"] {
+    margin-right: 8px;
+  }
+}
+
+.chat-area {
+  height: calc(100vh - 200px);
+  overflow: scroll;
+  text-align: left;
   padding-top: 8px;
 
-  .match {
-    display: flex;
-    border-bottom: 1px solid #eeeeee;
+  .ch {
+    margin-bottom: 16px;
 
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 100%;
-      margin: 10px 20px 10px 20px;
-      border: 2px solid #fff;
-      box-shadow: 1px 1px 2px #eee;
-      float: left;
+    &.stranger p {
+      background: #b40d7a;
+      color: #fff;
+    }
+
+    &.stranger {
+      text-align: right;
     }
   }
 
   p {
-    padding: 20px;
-    background-color: #fff;
+    max-width: 66vw;
+    padding: 8px;
+    font-size: 14px;
+    background: #eee;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    text-align: left;
+    display: inline;
   }
 }
-
-  .chat-match-name {
-    font-size: 16px;
-    font-weight: 600;
-    text-align: left;
-    margin: 10px 0 0 0;
-  }
-
-  .chat-preview {
-    font-size: 12px;
-  }
 </style>
