@@ -10,6 +10,10 @@ export function getCards() {
   return axios.get(`${apiRoot}/cards/1`);
 }
 
+
+export function createUser(user) {
+  return axios.post(`${apiRoot}/users`, user);
+}
 /*
  * cardId = bandId or personId
  * type = 'person' or 'band'

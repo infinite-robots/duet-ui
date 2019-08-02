@@ -3,21 +3,21 @@
     <loader v-if="busy"></loader>
     <div class="card">
       <p>Tell us a little about yourself.</p>
-      <input class="input" type="text" placeholder="Choose a username">
+      <input v-model="name" class="input" type="text" placeholder="Choose a username">
 
       <div class="select-wrap">
         <div class="select">
-          <select>
+          <select v-model="selectedAge">
             <option>Select Your Age</option>
-            <option v-for="age in ages" :key="age">{{ age === 66 ? '65+' : age }}</option>
+            <option  v-for="age in ages" :key="age">{{ age === 66 ? '65+' : age }}</option>
           </select>
         </div>
       </div>
 
       <div class="select-wrap">
         <div class="select">
-          <select>
-            <option>Gender</option>
+          <select v-model="selectedGender">
+            <option selected>Gender</option>
             <option>Male</option>
             <option>Female</option>
             <option>Unspecified</option>
@@ -25,19 +25,41 @@
         </div>
       </div>
 
-      <router-link class="button main-button" to="/swiper">Continue</router-link>
+      <button @click="saveUser()" class="button main-button">Continue</button>
     </div>
   </div>
 </template>
 
 <script>
-
+import {createUser} from "../services/api";
+import router from '../router'
 export default {
   name: 'onboarding',
   data() {
     return {
       busy: false,
+      selectedAge: "Select Your Age",
+      selectedGender: "Gender",
+      name: undefined,
       ages: Array.from({ length: 49 }, (_, i) => i + 18)
+    }
+  },methods: {
+    saveUser() {
+      let user = {
+        name: this.name,
+        bio: "",
+        gender: this.selectedGender,
+        age: this.selectedAge,
+      };
+      this.busy = true;
+      createUser(user).then(value => {
+        router.push({
+          path: '/swiper',
+
+        });
+        this.busy = false;
+      })
+
     }
   }
 }
