@@ -26,6 +26,11 @@ export default {
   justify-content: center;
   flex-direction: column;
   color: #fff;
+  background: #b40d7a; /* Old browsers */
+  background: -moz-linear-gradient(45deg,  #b40d7a 0%, #ef4023 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg,  #b40d7a 0%,#ef4023 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(45deg,  #b40d7a 0%,#ef4023 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  min-height: 100vh;
 
   .logo {
     width: 170px;
