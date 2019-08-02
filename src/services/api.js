@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let apiRoot = 'http://duet-api-docker.9dqvkk3fep.us-east-1.elasticbeanstalk.com';
+let apiRoot = 'https://love.duet-api.com';
 
 if(process.env.NODE_ENV == 'dev') {
     apiRoot = 'http://localhost:3000';
