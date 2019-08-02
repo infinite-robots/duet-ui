@@ -4,10 +4,10 @@
       isCurrent: isCurrent
     }">
     <div class="img-wrap">
-      <img src="../assets/band2.jpg" />
+      <img :src="card.img" />
       <div class="swipe-card-info">
         <p class="main-info">{{ card.name }}</p>
-        <p class="secondary-info">Pop</p>
+        <p class="secondary-info">{{ card.genre }}</p>
       </div>
     </div>
   </div>
