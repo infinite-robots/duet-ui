@@ -27,3 +27,7 @@ export function swipeCard(type, genre, userId, cardId, swipe) {
     swipe: swipe ? 'right' : 'left'
   });
 }
+
+export function longPoll() {
+  return axios.get(`${apiRoot}/interest-and-chats/1`);
+}
