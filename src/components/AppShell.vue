@@ -50,7 +50,7 @@ export default {
 
   i {
     font-size: 30px;
-    color: #cccccc;
+    color: #ca2461;
     cursor: pointer;
 
     &:hover {
