@@ -7,6 +7,7 @@
     <app-shell>
       <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].cardType !== 'battle'">
         <highcharts :options="chartOptions" ref="chart"></highcharts>
+        <span>80%</span>
       </div>
       <card-stack :cards="cards" v-if="cards.length > 0"
         @cardAccepted="handleCardAccepted"
@@ -52,6 +53,8 @@ export default {
     return {
       busy: true,
       howl: undefined,
+      userCompass: undefined,
+      matchPercent: 0,
       cards: [],
       // cards: [
       //   {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
@@ -170,6 +173,8 @@ export default {
             data: arrData,
             color: 'rgba(238, 60, 20, 0.50)',
           });
+
+          this.setMatchPercent(arrData);
         }
       } else {
         const comparerSeries = this.$refs.chart.chart.get('comparer');
@@ -181,6 +186,25 @@ export default {
         }
       }
     },
+    setMatchPercent(compass2) {
+      const compass1 = this.userCompass;
+      console.log(compass1, compass2)
+      if (compass1 && compass2) {
+        let diff = 0;
+        diff += Math.abs(compass1[0] - compass2[0]);
+        diff += Math.abs(compass1[1] - compass2[1]);
+        diff += Math.abs(compass1[2] - compass2[2]);
+        diff += Math.abs(compass1[3] - compass2[3]);
+        diff += Math.abs(compass1[4] - compass2[4]);
+        diff += Math.abs(compass1[5] - compass2[5]);
+        diff += Math.abs(compass1[6] - compass2[6]);
+        const x = 500 - diff;
+        this.matchPercent = (x / 500) * 100;
+        console.log(this.matchPercent);
+      } else {
+        return 0;
+      }
+    },
     sendSwipe(swipe) {
       const card = this.cards[0];
       swipeCard(card.type, card.genre, 1, card.id, swipe).then(resp => {
@@ -188,6 +212,7 @@ export default {
         if (resp.data.country) {
           // console.log('redraw chart?', arrData)
           this.$refs.chart.chart.series[0].setData(arrData, true);
+          this.userCompass = arrData;
         }
       });
     },
