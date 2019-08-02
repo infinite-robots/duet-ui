@@ -5,7 +5,7 @@
       <div class="chat-wrap">
 
         <div class="chat-area" v-if="chats && chats.length > 0">
-          <div class="ch" v-for="chat in chats" :key="chat.createdAt" :class="{stranger: chat.userId === userId}">
+          <div class="ch" v-for="chat in chats" :key="chat.createdAt" :class="{stranger: chat.sender_id > 0}">
           <p>
             {{ chat.message }}
           </p>
@@ -45,6 +45,9 @@ export default {
   mounted() {
     this.getChats();
     this.userId = getUser().id;
+    setInterval(() => {
+      this.getChats();
+    }, 3000)
   },
   methods: {
     sendMessage() {
