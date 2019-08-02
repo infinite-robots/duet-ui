@@ -4,6 +4,7 @@ import Home from './pages/Home.vue'
 import Onboarding from './pages/Onboarding.vue'
 import Swiper from './pages/Swiper.vue'
 import Matches from './pages/Matches.vue'
+import Chat from './pages/Chat.vue'
 import { requireAuth } from './services/auth';
 
 Vue.use(Router)
@@ -32,6 +33,12 @@ export default new Router({
       path: '/matches',
       name: 'matches',
       component: Matches,
+      // beforeEnter: requireAuth
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat,
       // beforeEnter: requireAuth
     },
     {
