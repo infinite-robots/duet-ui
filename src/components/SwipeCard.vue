@@ -7,7 +7,7 @@
       <img :src="card.img" />
       <div class="swipe-card-info">
         <p class="main-info">{{ card.name }}</p>
-        <p class="secondary-info">{{ card.genre }}</p>
+        <p class="secondary-info">{{ card.type === 'person' ? card.age : card.genre }}</p>
       </div>
     </div>
   </div>
