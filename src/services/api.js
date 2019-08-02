@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const apiRoot = 'http://duet-api-docker.9dqvkk3fep.us-east-1.elasticbeanstalk.com';
+let apiRoot = 'http://duet-api-docker.9dqvkk3fep.us-east-1.elasticbeanstalk.com';
+
+if(process.env.NODE_ENV == 'dev') {
+    apiRoot = 'http://localhost:3000';
+}
 
 export function getCards() {
   return axios.get(`${apiRoot}/cards/1`);
