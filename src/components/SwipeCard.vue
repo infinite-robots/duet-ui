@@ -141,6 +141,8 @@ $cardsTotal: 5;
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border: 5px solid #ffffffbd;
+    box-shadow: 3px 3px 4px #ccc;
   }
 }
 .swipe-card-info {
