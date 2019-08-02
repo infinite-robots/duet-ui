@@ -31,6 +31,11 @@ export function swipeCard(type, genre, userId, cardId, swipe) {
   });
 }
 
+export function getMatches() {
+  const user = getUser();
+  return axios.get(`${apiRoot}/users/${user.id}/matches`);
+}
+
 export function longPoll() {
   const user = getUser();
   return axios.get(`${apiRoot}/interest-and-chats/${user.id}`);
