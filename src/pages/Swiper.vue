@@ -314,7 +314,7 @@ export default {
 }
 .matchpercent {
   font-weight: 800;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #fff;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.5);
 }
 </style>

@@ -59,10 +59,11 @@ export function sendChat(userId, message) {
 
 export function markMatchesViewed() {
   const user = getUser();
+  const userId = 1;
   return axios.get(`${apiRoot}/interest-and-chats/${user.id}/duet/${userId}/viewed`);
 }
 
-export function markMessagesViewed() {
+export function markMessagesViewed(userId) {
   const user = getUser();
   return axios.get(`${apiRoot}/chats/${user.id}/duet/${userId}/viewed`);
 }

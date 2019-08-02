@@ -60,7 +60,7 @@ export default {
         const chatter = resp.data.chatter;
         this.chats = messages.length > 10 ? messages.slice(-10) : messages;
         this.busy = false;
-        markMessagesViewed().then(resp => {
+        markMessagesViewed(this.$route.params.id).then(resp => {
           // do nothing!
         });
       });

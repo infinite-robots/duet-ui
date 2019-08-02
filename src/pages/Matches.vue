@@ -22,7 +22,7 @@
 
 <script>
 import AppShell from '@/components/AppShell';
-import { getMatches } from '../services/api';
+import { getMatches, markMatchesViewed } from '../services/api';
 import router from '../router';
 
 export default {
@@ -39,6 +39,9 @@ export default {
       console.log(resp);
       this.matches = resp.data;
       this.busy = false;
+      markMatchesViewed().then(resp => {
+        // do nothing!
+      })
     });
   },
   methods: {
