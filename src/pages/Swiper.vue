@@ -1,9 +1,9 @@
 <template>
   <div class="band-swiper">
     <loader v-if="busy"></loader>
-    <!-- <Modal title="Let's get started!">
+    <Modal title="Let's get started!" v-if="showModal">
       <p>Instead of building a traditional profile, we're going to present you with some bands and artists. Just swipe left or right to indicate if you like them or not, and we'll do the rest!</p>
-    </Modal> -->
+    </Modal>
     <app-shell>
       <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].cardType !== 'battle'">
         <highcharts :options="chartOptions" ref="chart"></highcharts>
@@ -21,6 +21,7 @@
         @playPressed="handlePlayPressed"
         @playReleased="handlePlayReleased"
       ></swipe-tools>
+      <p v-if="cards.length > 0 && cards[0].cardType === 'normal'" class="hint">(hold Play to preview)</p>
       <div v-if="cards && cards.length > 0 && cards[0].cardType === 'battle'" class="battle-hint">
         <p>Battle of the Bands!</p>
         <p>Swipe up or down or use the checkmarks to indicate which band you prefer.</p>
@@ -48,6 +49,11 @@ export default {
   components: { Modal, AppShell, CardStack, SwipeTools, highcharts: Chart },
   mounted() {
     this.getCards();
+    const modalSeen = localStorage.getItem('modal1');
+    if (!modalSeen) {
+      localStorage.setItem('modal1', true);
+      this.showModal = true;
+    }
   },
   data() {
     return {
@@ -55,6 +61,7 @@ export default {
       howl: undefined,
       userCompass: undefined,
       matchPercent: 0,
+      showModal: false,
       cards: [],
       // cards: [
       //   {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
@@ -290,5 +297,10 @@ export default {
   top: 80px;
   background: rgba(0,0,0,.5);
   border-radius: 100%;
+}
+.hint {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 8px;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
   <div class="app-shell">
+    <Modal title="You're in tune!" v-if="showMatchModal">
+      <p>You got a match - head over to the chat and strike up a conversation.</p>
+    </Modal>
     <div class="app-header">
       <router-link to="/onboarding"><i class="material-icons">account_circle</i></router-link>
       <router-link to="/swiper"><img src="../assets/duet_logo_color.png" /></router-link>
@@ -13,22 +16,30 @@
 
 <script>
 import { longPoll } from '../services/api';
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'AppShell',
+  components: { Modal },
   data() {
     return {
       closed: false,
       longPoll: undefined,
-      unreadNotifications: false
+      unreadNotifications: false,
+      matches: 0,
+      showMatchModal: false
     }
   },
   mounted() {
     this.longPoll = setInterval(() => {
       longPoll().then(resp => {
         this.unreadNotifications = resp.data.interestcount > 0 || resp.data.chatcount > 0;
+        if (resp.data.interestcount > this.matches) {
+          this.showMatchModal = true;
+        }
+        this.matches = resp.data.interestcount;
       })
-    }, 1000);
+    }, 5000);
   },
   methods: {
   },

@@ -4,12 +4,16 @@
     <app-shell>
       <div class="chat-wrap">
 
-        <div class="chat-area">
+        <div class="chat-area" v-if="chats && chats.length > 0">
           <div class="ch" v-for="chat in chats" :key="chat.createdAt" :class="{stranger: chat.userId === userId}">
           <p>
             {{ chat.message }}
           </p>
           </div>
+        </div>
+
+        <div v-else class="no-messages">
+          <p>No messages. Feeling shy?</p>
         </div>
         
         <div class="chat-input-wrap">
@@ -45,14 +49,13 @@ export default {
     sendMessage() {
       sendChat(this.$route.params.id, this.message).then(resp => {
         this.message = '';
-        console.log(resp);
         this.getChats();
       });
     },
     getChats() {
       getUserChats(this.$route.params.id).then(resp => {
-        console.log(resp.data);
-        this.chats = resp.data.slice(-10);
+        console.log('chat resp', resp);
+        this.chats = resp.data.length > 10 ? resp.data.slice(-10) : resp.data;
         this.busy = false;
       });
     }
@@ -63,6 +66,10 @@ export default {
 <style lang="scss">
 .msg {
   width: 100%;
+}
+.no-messages p {
+  margin-top: 50px;
+  color: #aaa;
 }
 .chat-wrap {
   padding: 16px;
