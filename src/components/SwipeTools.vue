@@ -3,6 +3,9 @@
     <div class="swipe-button dislike" @click="$emit('cardRejected')">
       <i class="material-icons">close</i>
     </div>
+    <div class="play-button swipe-button" @mousedown="$emit('playPressed')" @mouseup="$emit('playReleased')">
+      <i class="material-icons">play_arrow</i>
+    </div>
     <div class="swipe-button like" @click="$emit('cardAccepted')">
       <i class="material-icons">check</i>
     </div>
@@ -40,5 +43,20 @@ export default {
 
 .dislike {
   background: #EE3C14;
+}
+
+.play-button {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  color: #333;
+
+  &:hover {
+    background: #f8f8f8;
+  }
+
+  &:active {
+    background: #eee;
+  }
 }
 </style>

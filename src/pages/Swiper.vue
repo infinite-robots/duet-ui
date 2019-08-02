@@ -17,6 +17,8 @@
       <swipe-tools v-if="cards.length > 0 && cards[0].cardType === 'normal'"
         @cardAccepted="handleCardAccepted"
         @cardRejected="handleCardRejected"
+        @playPressed="handlePlayPressed"
+        @playReleased="handlePlayReleased"
       ></swipe-tools>
       <div v-if="cards && cards.length > 0 && cards[0].cardType === 'battle'" class="battle-hint">
         <p>Battle of the Bands!</p>
@@ -32,6 +34,7 @@ import AppShell from '@/components/AppShell.vue'
 import CardStack from '@/components/CardStack.vue'
 import SwipeTools from '@/components/SwipeTools.vue'
 import { Chart } from 'highcharts-vue'
+import { Howl, Howler } from 'howler';
 
 import Highcharts from 'highcharts'
 import highchartsMore from 'highcharts/highcharts-more'
@@ -48,6 +51,7 @@ export default {
   data() {
     return {
       busy: true,
+      howl: undefined,
       cards: [],
       // cards: [
       //   {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
@@ -141,6 +145,10 @@ export default {
       this.loadMoreCards();
     },
     checkNewCard() {
+      if (this.howl) {
+        this.howl.stop();
+      }
+      this.howl = undefined;
       const comparerSeries = this.$refs.chart.chart.get('comparer');
       if (this.cards.length === 0 && comparerSeries) {
         comparerSeries.setData([0, 0, 0, 0, 0, 0, 0], true);
@@ -206,6 +214,21 @@ export default {
         this.busy = false;
         this.checkNewCard();
       })
+    },
+    playAudio() {
+      const sound = new Howl({
+        src: [this.cards[0].audio]
+      });
+
+      sound.play();
+
+      this.howl = sound;
+    },
+    handlePlayPressed() {
+      this.playAudio();
+    },
+    handlePlayReleased() {
+      this.howl.pause();
     }
   }
 }
