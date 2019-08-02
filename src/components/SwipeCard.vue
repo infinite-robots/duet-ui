@@ -126,7 +126,7 @@ export default {
 
 <style lang="scss">
 .swipe-card {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 220px);
   position: absolute;
   background: #eee;
   // padding: 8px;
@@ -161,7 +161,7 @@ $cardsTotal: 5;
 }
 .img-wrap {
   position: relative;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 220px);
   // border: 5px solid red;
   border-radius: 5px;
   width: 100%;

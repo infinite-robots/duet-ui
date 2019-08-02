@@ -3,7 +3,9 @@
     <div class="swipe-button dislike" @click="$emit('cardRejected')">
       <i class="material-icons">close</i>
     </div>
-    <div class="play-button swipe-button" @mousedown="$emit('playPressed')" @mouseup="$emit('playReleased')">
+    <div class="play-button swipe-button" @mousedown="$emit('playPressed')" @mouseup="$emit('playReleased')"
+      v-hammer:press="handleHammerPress" v-hammer:pressup="handleHammerRelease"
+    >
       <i class="material-icons">play_arrow</i>
     </div>
     <div class="swipe-button like" @click="$emit('cardAccepted')">
@@ -15,6 +17,14 @@
 <script>
 export default {
   name: 'SwipeTools',
+  methods: {
+    handleHammerPress() {
+      this.$emit('playPressed')
+    },
+    handleHammerRelease() {
+      this.$emit('playReleased')
+    }
+  }
 }
 </script>
 

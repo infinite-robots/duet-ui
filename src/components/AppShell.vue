@@ -3,7 +3,7 @@
     <div class="app-header">
       <router-link to="/onboarding"><i class="material-icons">account_circle</i></router-link>
       <router-link to="/swiper"><img src="../assets/duet_logo_color.png" /></router-link>
-      <router-link to="/matches"><i class="material-icons">chat</i></router-link>
+      <router-link to="/matches"><i class="material-icons" :class="{unread: unreadNotifications}">chat</i></router-link>
     </div>
     <div class="app-content">
       <slot></slot>
@@ -12,14 +12,28 @@
 </template>
 
 <script>
+import { longPoll } from '../services/api';
+
 export default {
   name: 'AppShell',
   data() {
     return {
-      closed: false
+      closed: false,
+      longPoll: undefined,
+      unreadNotifications: false
     }
   },
+  mounted() {
+    this.longPoll = setInterval(() => {
+      longPoll().then(resp => {
+        this.unreadNotifications = resp.data.interestcount > 0 || resp.data.chatcount > 0;
+      })
+    }, 1000);
+  },
   methods: {
+  },
+  beforeDestroy() {
+    clearInterval(this.longPoll);
   }
 }
 </script>
@@ -61,6 +75,10 @@ export default {
 
     &:hover {
       color: #666;
+    }
+
+    &.unread {
+      color: #b40d7a;
     }
   }
 }
