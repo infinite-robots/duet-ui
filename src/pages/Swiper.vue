@@ -5,7 +5,7 @@
       <p>Instead of building a traditional profile, we're going to present you with some bands and artists. Just swipe left or right to indicate if you like them or not, and we'll do the rest!</p>
     </Modal> -->
     <app-shell>
-      <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].type !== 'battle'">
+      <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].cardType !== 'battle'">
         <highcharts :options="chartOptions" ref="chart"></highcharts>
       </div>
       <card-stack :cards="cards" v-if="cards.length > 0"
@@ -14,11 +14,11 @@
         @bandAselected="handleBand1Selected"
         @bandBselected="handleBand2Selected"
       ></card-stack>
-      <swipe-tools v-if="cards.length > 0 && cards[0].type === 'normal'"
+      <swipe-tools v-if="cards.length > 0 && cards[0].cardType === 'normal'"
         @cardAccepted="handleCardAccepted"
         @cardRejected="handleCardRejected"
       ></swipe-tools>
-      <div v-if="cards && cards.length > 0 && cards[0].type === 'battle'" class="battle-hint">
+      <div v-if="cards && cards.length > 0 && cards[0].cardType === 'battle'" class="battle-hint">
         <p>Battle of the Bands!</p>
         <p>Swipe up or down or use the checkmarks to indicate which band you prefer.</p>
       </div>
@@ -163,11 +163,11 @@ export default {
     },
     getCards() {
       getCards().then(resp => {
-        console.log(resp);
         this.cards = resp.data.map(card => {
-          card.type = 'normal';
+          card.cardType = 'normal';
           return card;
         });
+        console.log('cards', this.cards);
         this.busy = false;
       })
     }

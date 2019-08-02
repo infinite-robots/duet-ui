@@ -1,11 +1,11 @@
 <template>
   <div class="card-stack">
     <template v-for="card in cards">
-      <swipe-card :key="card.name" v-if="card.type === 'normal'" :card="card"
+      <swipe-card :key="card.name" v-if="card.cardType === 'normal'" :card="card"
         @cardAccepted="$emit('cardAccepted');"
         @cardRejected="$emit('cardRejected');"
       ></swipe-card>
-      <battle-card :key="card.band1.name" v-if="card.type === 'battle'" :card="card"
+      <battle-card :key="card.band1.name" v-if="card.cardType === 'battle'" :card="card"
         @bandAselected="$emit('bandAselected');"
         @bandBselected="$emit('bandBselected');"
       ></battle-card>
