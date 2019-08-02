@@ -31,6 +31,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route);
     this.longPoll = setInterval(() => {
       longPoll().then(resp => {
         this.unreadNotifications = resp.data.interestcount > 0 || resp.data.chatcount > 0;

@@ -4,10 +4,13 @@
     <Modal title="Let's get started!" v-if="showModal">
       <p>Instead of building a traditional profile, we're going to present you with some bands and artists. Just swipe left or right to indicate if you like them or not, and we'll do the rest!</p>
     </Modal>
+    <Modal title="Great start!" v-if="showProfileModal">
+      <p>Now that we've got an initial feel for your musical taste, we're gonna start mixing in some user profiles along with the bands and artists.</p>
+    </Modal>
     <app-shell>
       <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].cardType !== 'battle'">
         <highcharts :options="chartOptions" ref="chart"></highcharts>
-        <span>80%</span>
+        <span class="matchpercent" v-if="cards[0] && cards[0].type === 'person' && matchPercent && matchPercent > 0">{{matchPercent}}%</span>
       </div>
       <card-stack :cards="cards" v-if="cards.length > 0"
         @cardAccepted="handleCardAccepted"
@@ -57,6 +60,8 @@ export default {
   },
   data() {
     return {
+      swipeCount: 0,
+      showProfileModal: false,
       busy: true,
       howl: undefined,
       userCompass: undefined,
@@ -206,13 +211,17 @@ export default {
         diff += Math.abs(compass1[5] - compass2[5]);
         diff += Math.abs(compass1[6] - compass2[6]);
         const x = 500 - diff;
-        this.matchPercent = (x / 500) * 100;
+        this.matchPercent = Math.floor((x / 500) * 100);
         console.log(this.matchPercent);
       } else {
         return 0;
       }
     },
     sendSwipe(swipe) {
+      this.swipeCount++;
+      if (this.swipeCount > 9) {
+        this.showProfileModal = true;
+      }
       const card = this.cards[0];
       swipeCard(card.type, card.genre, 1, card.id, swipe).then(resp => {
         const arrData = this.getChartDataFromCompass(resp.data);
@@ -302,5 +311,10 @@ export default {
   color: #aaa;
   font-size: 14px;
   margin-top: 8px;
+}
+.matchpercent {
+  font-weight: 800;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #fff;
 }
 </style>

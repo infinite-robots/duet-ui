@@ -49,9 +49,20 @@ export function getUserChats(userId) {
 export function sendChat(userId, message) {
   const user = getUser();
   return axios.post(`${apiRoot}/chats`, {
+    sender_id: user.id,
     userId: user.id,
     chatterId: parseInt(userId),
     message,
     isRead: false
   });
+}
+
+export function markMatchesViewed() {
+  const user = getUser();
+  return axios.get(`${apiRoot}/interest-and-chats/${user.id}/duet/${userId}/viewed`);
+}
+
+export function markMessagesViewed() {
+  const user = getUser();
+  return axios.get(`${apiRoot}/chats/${user.id}/duet/${userId}/viewed`);
 }

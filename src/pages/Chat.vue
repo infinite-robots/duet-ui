@@ -27,7 +27,7 @@
 
 <script>
 import AppShell from '@/components/AppShell';
-import { getUserChats, sendChat } from '../services/api';
+import { getUserChats, sendChat, markMessagesViewed } from '../services/api';
 import { getUser } from '../services/auth';
 
 export default {
@@ -38,7 +38,8 @@ export default {
       busy: true,
       chats: undefined,
       message: '',
-      userId: undefined
+      userId: undefined,
+      chatter: undefined
     }
   },
   mounted() {
@@ -55,8 +56,13 @@ export default {
     getChats() {
       getUserChats(this.$route.params.id).then(resp => {
         console.log('chat resp', resp);
-        this.chats = resp.data.length > 10 ? resp.data.slice(-10) : resp.data;
+        const messages = resp.data.messages;
+        const chatter = resp.data.chatter;
+        this.chats = messages.length > 10 ? messages.slice(-10) : messages;
         this.busy = false;
+        markMessagesViewed().then(resp => {
+          // do nothing!
+        });
       });
     }
   }
