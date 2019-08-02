@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Loader from './components/Loader';
+import { VueHammer } from 'vue2-hammer'
+Vue.use(VueHammer)
 
 Vue.config.productionTip = false
 

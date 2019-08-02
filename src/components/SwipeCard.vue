@@ -2,7 +2,9 @@
   <div class="swipe-card" :style="{ transform: transformString }" ref="interactElement" :class="{
       isAnimating: isInteractAnimating,
       isCurrent: isCurrent
-    }">
+    }"
+    v-hammer:pan="handleSwipe"
+  >
     <div class="img-wrap">
       <img :src="card.img" />
       <div class="swipe-card-info">
@@ -91,6 +93,9 @@ export default {
     interact(this.$refs.interactElement).unset();
   },
   methods: {
+    handleSwipe(event) {
+      // console.log(event, item, i)
+    },
     interactSetPosition(coordinates) {
       const { x = 0, y = 0, rotation = 0 } = coordinates;
       this.interactPosition = { x, y, rotation };
