@@ -43,22 +43,21 @@ export default {
   name: 'Swiper',
   components: { Modal, AppShell, CardStack, SwipeTools, highcharts: Chart },
   mounted() {
-    // getCards().then(resp => {
-    //   console.log(resp);
-    // })
+    this.getCards();
   },
   data() {
     return {
-      busy: false,
-      cards: [
-        // {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
-        {name: 'Nine Inch Nails', type: 'normal'},
-        {name: 'The Beatles', type: 'normal'},
-        {name: 'Gorillaz', type: 'normal'},
-        // {type: 'battle', band1: {name: 'test123'}, band2: {name: 'test222'}},
-        {name: 'Eminem', type: 'normal'},
-        // {type: 'battle', band1: {name: 'test11111'}, band2: {name: 'test2123123'}},
-      ],
+      busy: true,
+      cards: [],
+      // cards: [
+      //   {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
+      //   {name: 'Nine Inch Nails', type: 'normal'},
+      //   {name: 'The Beatles', type: 'normal'},
+      //   {name: 'Gorillaz', type: 'normal'},
+      //   {type: 'battle', band1: {name: 'test123'}, band2: {name: 'test222'}},
+      //   {name: 'Eminem', type: 'normal'},
+      //   {type: 'battle', band1: {name: 'test11111'}, band2: {name: 'test2123123'}},
+      // ],
       chartOptions: {
         chart: {
           polar: true,
@@ -150,19 +149,28 @@ export default {
       this.loadMoreCards();
     },
     handleBand1Selected() {
-      console.log('handleband1')
       this.cards.shift();
       this.loadMoreCards();
     },
     handleBand2Selected() {
-      console.log('handleband2')
       this.cards.shift();
       this.loadMoreCards();
     },
     loadMoreCards() {
-      if (this.cards.length <= 1) {
+      if (this.cards.length === 0) {
         this.busy = true;
+        this.getCards();
       }
+    },
+    getCards() {
+      getCards().then(resp => {
+        console.log(resp);
+        this.cards = resp.data.map(card => {
+          card.type = 'normal';
+          return card;
+        });
+        this.busy = false;
+      })
     }
   }
 }
