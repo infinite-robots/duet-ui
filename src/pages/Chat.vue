@@ -39,15 +39,19 @@ export default {
       chats: undefined,
       message: '',
       userId: undefined,
-      chatter: undefined
+      chatter: undefined,
+      i: undefined
     }
   },
   mounted() {
     this.getChats();
     this.userId = getUser().id;
-    setInterval(() => {
+    this.i = setInterval(() => {
       this.getChats();
     }, 3000)
+  },
+  beforeDestroy() {
+    clearInterval(this.i);
   },
   methods: {
     sendMessage() {
