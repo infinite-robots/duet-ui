@@ -6,11 +6,12 @@ import Loader from './components/Loader';
 
 Vue.config.productionTip = false
 
+Vue.component('loader', Loader);
+
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
 
-Vue.component('loader', Loader);
 

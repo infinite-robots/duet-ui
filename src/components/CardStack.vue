@@ -6,8 +6,8 @@
         @cardRejected="$emit('cardRejected');"
       ></swipe-card>
       <battle-card :key="card.band1.name" v-if="card.type === 'battle'" :card="card"
-        @cardAccepted="$emit('cardAccepted');"
-        @cardRejected="$emit('cardRejected');"
+        @bandAselected="$emit('bandAselected');"
+        @bandBselected="$emit('bandBselected');"
       ></battle-card>
     </template>
   </div>

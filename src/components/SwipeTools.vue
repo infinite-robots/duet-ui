@@ -1,9 +1,9 @@
 <template>
   <div class="swipe-tools">
-    <div class="swipe-button dislike">
+    <div class="swipe-button dislike" @click="$emit('cardRejected')">
       <i class="material-icons">close</i>
     </div>
-    <div class="swipe-button like">
+    <div class="swipe-button like" @click="$emit('cardAccepted')">
       <i class="material-icons">check</i>
     </div>
   </div>

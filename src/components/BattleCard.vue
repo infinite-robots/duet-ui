@@ -10,7 +10,7 @@
         <p>Genre</p>
       </div>
       <div class="swipe-hint band1">
-        <div class="swipe-button like">
+        <div class="swipe-button like" @click="$emit('bandAselected')">
           <i class="material-icons">check</i>
         </div>
         <i class="material-icons arrow-thing">arrow_upward</i>
@@ -24,7 +24,7 @@
       </div>
       <div class="swipe-hint band2">
         <i class="material-icons arrow-thing">arrow_downward</i>
-        <div class="swipe-button like">
+        <div class="swipe-button like" @click="$emit('bandBselected')">
           <i class="material-icons">check</i>
         </div>
       </div>
@@ -102,10 +102,10 @@ export default {
     playCard(like) {
       if (like) {
         this.interactSetPosition({x: 1000})
-        this.$emit('cardAccepted');
+        this.$emit('bandAselected');
       } else {
         this.interactSetPosition({x: -1000})
-        this.$emit('cardRejected');
+        this.$emit('bandBselected');
       }
       this.interactUnsetElement();
     }

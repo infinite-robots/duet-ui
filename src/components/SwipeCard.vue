@@ -126,6 +126,9 @@ $cardsTotal: 5;
     z-index: $cardsTotal - $index;
     transform: translateY($translation) scale($scale);
   }
+  .swipe-card:nth-child(n+5) {
+    display: none;
+  }
 }
 .img-wrap {
   position: relative;
