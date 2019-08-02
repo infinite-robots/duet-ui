@@ -2,7 +2,7 @@
   <div class="chat">
     <app-shell>
       <div class="matches-wrap">
-        <p>Discover New Matches</p>
+      <p>Conversation with Matt</p>
         <div class="match" v-for="match in matches" :key="match.name">
           <img src="https://images.unsplash.com/photo-1446040945968-d303ecb10b4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" />
           <div class="">
@@ -21,15 +21,6 @@ import AppShell from '@/components/AppShell';
 export default {
   name: 'chat',
   components: { AppShell },
-  data() {
-    return {
-      matches: [
-        {name: 'Sara'},
-        {name: 'Alice'},
-        {name: 'Maria'}
-      ]
-    }
-  }
 }
 </script>
 
