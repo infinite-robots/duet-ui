@@ -253,6 +253,9 @@ export default {
       })
     },
     playAudio() {
+      if (this.howl) {
+        this.howl.stop();
+      }
       const sound = new Howl({
         src: [this.cards[0].audio]
       });
