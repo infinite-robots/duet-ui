@@ -7,7 +7,7 @@
       <img :src="card.img" />
       <div class="swipe-card-info">
         <p class="main-info">{{ card.name }}</p>
-        <p class="secondary-info">{{ card.type === 'normal' ? card.age : card.genre }}</p>
+        <p class="secondary-info">{{ card.type === 'person' ? card.age : card.genre }}</p>
       </div>
     </div>
   </div>
@@ -122,7 +122,7 @@ export default {
   height: calc(100vh - 200px);
   position: absolute;
   // padding: 8px;
-  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+  box-shadow: 0px 0px 3px rgba(0,0,0,.3);
   border-radius: 5px;
   // max-width: 420px;
   width: calc(100% - 16px);
@@ -172,8 +172,9 @@ $cardsTotal: 5;
   background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(0,0,0,0.75) 80%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,0.75) 80%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   padding: 16px;
-  width: 100%;
-  bottom: 0;
+  width: calc(100% - 6px);
+  bottom: 3px;
+  left: 3px;
   color: #fff;
   border-radius: 0 0 5px 5px;
   text-align: left;
@@ -181,6 +182,7 @@ $cardsTotal: 5;
   .main-info {
     font-size: 32px;
     font-weight: 800;
+    white-space: nowrap;
   }
 
   .secondary-info {

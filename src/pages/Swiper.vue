@@ -141,8 +141,9 @@ export default {
       const card = this.cards[0];
       swipeCard(card.type, card.genre, 1, card.id, true).then(resp => {
         const arrData = Object.values(resp.data);
-        console.log(arrData);
-        if(resp.match === undefined) {
+        console.log(resp.data.country);
+        if (resp.data.country) {
+          console.log('redraw chart?', arrData)
           this.$refs.chart.chart.series[0].setData(arrData, true);
         }
       });
