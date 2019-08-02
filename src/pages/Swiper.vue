@@ -114,7 +114,7 @@ export default {
         series: [{
           type: 'area',
           name: 'Area',
-          data: [16, 50, 16, 100, 0, 16, 16],
+          data: [50, 50, 50, 50, 50, 50, 50],
           fillOpacity: .65
         }, 
         // {
@@ -141,13 +141,16 @@ export default {
       this.loadMoreCards();
     },
     checkNewCard() {
-      if (this.cards.length === 0) {
-        this.$refs.chart.chart.get('comparer').remove();
+      const comparerSeries = this.$refs.chart.chart.get('comparer');
+      if (this.cards.length === 0 && comparerSeries) {
+        comparerSeries.setData([0, 0, 0, 0, 0, 0, 0], true);
+        setTimeout(() => {
+          comparerSeries.remove();
+        }, 300);
         return;
       }
       const currentCard = this.cards[0];
-      if (currentCard.type === 'person') {
-        const comparerSeries = this.$refs.chart.chart.get('comparer');
+      if (currentCard && currentCard.type === 'person') {
         const arrData = Object.values(currentCard.compass);
         if (comparerSeries) {
           comparerSeries.setData(arrData, true);
@@ -163,17 +166,19 @@ export default {
       } else {
         const comparerSeries = this.$refs.chart.chart.get('comparer');
         if (comparerSeries) {
-          comparerSeries.remove();
+          comparerSeries.setData([0, 0, 0, 0, 0, 0, 0], true);
+          setTimeout(() => {
+            comparerSeries.remove();
+          }, 300);
         }
       }
     },
     sendSwipe(swipe) {
       const card = this.cards[0];
-      swipeCard(card.type, card.genre, 1, card.id, true).then(resp => {
+      swipeCard(card.type, card.genre, 1, card.id, swipe).then(resp => {
         const arrData = Object.values(resp.data);
-        console.log(resp.data.country);
         if (resp.data.country) {
-          console.log('redraw chart?', arrData)
+          // console.log('redraw chart?', arrData)
           this.$refs.chart.chart.series[0].setData(arrData, true);
         }
       });
@@ -198,8 +203,8 @@ export default {
           card.cardType = 'normal';
           return card;
         });
-        console.log('cards', this.cards);
         this.busy = false;
+        this.checkNewCard();
       })
     }
   }

@@ -121,6 +121,7 @@ export default {
 .swipe-card {
   height: calc(100vh - 200px);
   position: absolute;
+  background: #eee;
   // padding: 8px;
   box-shadow: 0px 0px 3px rgba(0,0,0,.3);
   border-radius: 5px;
