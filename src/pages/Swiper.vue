@@ -6,7 +6,7 @@
     </Modal> -->
     <app-shell>
       <div class="chart-wrap" v-if="cards.length === 0 || cards.length > 0 && cards[0].type !== 'battle'">
-        <highcharts :options="chartOptions"></highcharts>
+        <highcharts :options="chartOptions" ref="chart"></highcharts>
       </div>
       <card-stack :cards="cards" v-if="cards.length > 0"
         @cardAccepted="handleCardAccepted"
@@ -18,7 +18,7 @@
         @cardAccepted="handleCardAccepted"
         @cardRejected="handleCardRejected"
       ></swipe-tools>
-      <div v-if="cards.length > 0 && cards[0].type === 'battle'" class="battle-hint">
+      <div v-if="cards && cards.length > 0 && cards[0].type === 'battle'" class="battle-hint">
         <p>Battle of the Bands!</p>
         <p>Swipe up or down or use the checkmarks to indicate which band you prefer.</p>
       </div>
@@ -37,7 +37,7 @@ import Highcharts from 'highcharts'
 import highchartsMore from 'highcharts/highcharts-more'
 highchartsMore(Highcharts)
 
-import { getCards } from '../services/api';
+import { getCards, swipeCard } from '../services/api';
 
 export default {
   name: 'Swiper',
@@ -65,18 +65,11 @@ export default {
           backgroundColor: 'transparent',
           margin: -8
         },
-
         title: undefined,
-
-        // subtitle: {
-        //     text: 'Also known as Radar Chart'
-        // },
-
         pane: {
             startAngle: 0,
             endAngle: 360,
         },
-
         xAxis: {
             tickInterval: (360 / 7),
             min: 0,
@@ -86,18 +79,16 @@ export default {
             },
             
         },
-
         yAxis: {
-            // min: 0,
-            floor: 0,
-            ceiling: 100,
+            min: 0,
+            max: 100,
+            // floor: 0,
+            // ceiling: 100,
             labels: {
               format: ' '
             },
         },
-
         plotOptions: {
-
             series: {
                 pointStart: 0,
                 pointInterval: (360 / 7),
@@ -111,42 +102,50 @@ export default {
                 groupPadding: 0
             }
         },
-
         credits: {
           enabled: false
         },
-
         legend: {
           enabled: false
         },
-
         tooltip: {
           enabled: false
         },
-
         series: [{
           type: 'area',
           name: 'Area',
-          data: [50, 50, 50, 50, 50, 50, 50]
+          data: [16, 50, 16, 100, 0, 16, 16]
         }, 
-        {
-          type: 'area',
-          name: 'Area2',
-          data: [10, 20, 100, 1, 1, 80, 20],
-          color: 'rgba(238, 60, 20, 0.50)',
-        }
+        // {
+        //   type: 'area',
+        //   name: 'Area2',
+        //   data: [10, 20, 100, 1, 1, 80, 20],
+        //   color: 'rgba(238, 60, 20, 0.50)',
+        // }
         ]
       }
     }
   },
   methods: {
     handleCardAccepted() {
+      this.sendSwipe(true);
       this.cards.shift();
       this.loadMoreCards();
     },
     handleCardRejected() {
+      this.sendSwipe(false);
       this.cards.shift();
       this.loadMoreCards();
+    },
+    sendSwipe(swipe) {
+      const card = this.cards[0];
+      swipeCard(card.type, card.genre, 1, card.id, true).then(resp => {
+        const arrData = Object.values(resp.data);
+        console.log(arrData);
+        if(resp.match === undefined) {
+          this.$refs.chart.chart.series[0].setData(arrData, true);
+        }
+      });
     },
     handleBand1Selected() {
       this.cards.shift();
