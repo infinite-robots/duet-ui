@@ -131,12 +131,41 @@ export default {
     handleCardAccepted() {
       this.sendSwipe(true);
       this.cards.shift();
+      this.checkNewCard();
       this.loadMoreCards();
     },
     handleCardRejected() {
       this.sendSwipe(false);
       this.cards.shift();
+      this.checkNewCard();
       this.loadMoreCards();
+    },
+    checkNewCard() {
+      if (this.cards.length === 0) {
+        this.$refs.chart.chart.get('comparer').remove();
+        return;
+      }
+      const currentCard = this.cards[0];
+      if (currentCard.type === 'person') {
+        const comparerSeries = this.$refs.chart.chart.get('comparer');
+        const arrData = Object.values(currentCard.compass);
+        if (comparerSeries) {
+          comparerSeries.setData(arrData, true);
+        } else {
+          this.$refs.chart.chart.addSeries({
+            id: 'comparer',
+            name: 'comparer',
+            type: 'area',
+            data: arrData,
+            color: 'rgba(238, 60, 20, 0.50)',
+          });
+        }
+      } else {
+        const comparerSeries = this.$refs.chart.chart.get('comparer');
+        if (comparerSeries) {
+          comparerSeries.remove();
+        }
+      }
     },
     sendSwipe(swipe) {
       const card = this.cards[0];

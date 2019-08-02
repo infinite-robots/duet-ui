@@ -6,7 +6,7 @@
         <router-link to="/chat">
          <div class="match" v-for="match in matches" :key="match.name">
          <img src="https://images.unsplash.com/photo-1446040945968-d303ecb10b4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" />
-          <div class="">
+          <div class="match-info">
             <h3 class="chat-match-name"> {{ match.name }}</h3>
             <div class="chat-preview">You have a Match. Say "Hello".</div>
           </div> 
@@ -60,16 +60,28 @@ export default {
   }
 }
 
-  .chat-match-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    text-align: left;
-    margin: 10px 0 0 0;
-  }
+.match-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 
-  .chat-preview {
-    font-size: 12px;
-    color: #333;
+  h3 {
+    margin: 0;
   }
+}
+
+.chat-match-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  margin: 10px 0 0 0;
+}
+
+.chat-preview {
+  font-size: 12px;
+  color: #333;
+}
 </style>
