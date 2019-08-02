@@ -139,7 +139,7 @@ $cardsTotal: 5;
   img {
     border-radius: 5px;
     height: 100%;
-    width: auto;
+    width: 100%;
     object-fit: cover;
   }
 }
