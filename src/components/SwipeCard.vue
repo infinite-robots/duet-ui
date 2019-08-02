@@ -6,8 +6,10 @@
     <div class="img-wrap">
       <img :src="card.img" />
       <div class="swipe-card-info">
-        <p class="main-info">{{ card.name }}</p>
-        <p class="secondary-info">{{ card.type === 'person' ? card.age : card.genre }}</p>
+        <p class="main-info">{{ card.name }}<span v-if="card.type === 'person'">{{ card.age }}</span></p>
+        <p class="secondary-info" :class="{ bio: card.type === 'person'}">
+          {{ card.type === 'person' ? card.bio : card.genre }}
+        </p>
       </div>
     </div>
   </div>
@@ -179,16 +181,28 @@ $cardsTotal: 5;
   color: #fff;
   border-radius: 0 0 5px 5px;
   text-align: left;
+  overflow: hidden;
 
   .main-info {
     font-size: 32px;
     font-weight: 800;
     white-space: nowrap;
+
+    span {
+      margin-left: 8px;
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 
   .secondary-info {
     font-size: 20px;
     font-weight: 600;
+
+    &.bio {
+      font-size: 16px;
+      font-weight: normal;
+    }
   }
 }
 </style>

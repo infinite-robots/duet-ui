@@ -159,7 +159,7 @@ export default {
       }
       const currentCard = this.cards[0];
       if (currentCard && currentCard.type === 'person') {
-        const arrData = Object.values(currentCard.compass);
+        const arrData = this.getChartDataFromCompass(currentCard.compass);
         if (comparerSeries) {
           comparerSeries.setData(arrData, true);
         } else {
@@ -184,12 +184,24 @@ export default {
     sendSwipe(swipe) {
       const card = this.cards[0];
       swipeCard(card.type, card.genre, 1, card.id, swipe).then(resp => {
-        const arrData = Object.values(resp.data);
+        const arrData = this.getChartDataFromCompass(resp.data);
         if (resp.data.country) {
           // console.log('redraw chart?', arrData)
           this.$refs.chart.chart.series[0].setData(arrData, true);
         }
       });
+    },
+    getChartDataFromCompass(compass) {
+      const result = [];
+      result.push(compass['hip-hop']);
+      result.push(compass['country']);
+      result.push(compass['rock']);
+      result.push(compass['edm']);
+      result.push(compass['pop']);
+      result.push(compass['latin']);
+      result.push(compass['podcast']);
+
+      return result;
     },
     handleBand1Selected() {
       this.cards.shift();
