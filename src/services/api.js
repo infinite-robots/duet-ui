@@ -40,3 +40,18 @@ export function longPoll() {
   const user = getUser();
   return axios.get(`${apiRoot}/interest-and-chats/${user.id}`);
 }
+
+export function getUserChats(userId) {
+  const user = getUser();
+  return axios.get(`${apiRoot}/chats/${user.id}/duet/${userId}`);
+}
+
+export function sendChat(userId, message) {
+  const user = getUser();
+  return axios.post(`${apiRoot}/chats`, {
+    userId: user.id,
+    chatterId: parseInt(userId),
+    message,
+    isRead: false
+  });
+}

@@ -2,13 +2,18 @@
   <div class="chat">
     <app-shell>
       <div class="matches-wrap">
-        <p>Discover New Matches</p>
-        <div class="match" v-for="match in matches" :key="match.name" @click="chatWith(match.id)">
-          <img :src="match.img" />
-          <div class="match-info">
-            <h3 class="chat-match-name"> {{ match.name }}</h3>
-            <div class="chat-preview">You have a Match. Say "Hello".</div>
-          </div> 
+        <p class="matches-header">Your Matches</p>
+        <div class="m" v-if="matches && matches.length > 0">
+          <div class="match" v-for="match in matches" :key="match.name" @click="chatWith(match.id)">
+            <img :src="match.img" />
+            <div class="match-info">
+              <h3 class="chat-match-name"> {{ match.name }}</h3>
+              <div class="chat-preview">{{ match.lastMessage ? match.lastMessage : 'Say hi to your match'}}</div>
+            </div> 
+          </div>
+        </div>
+        <div v-else class="no-matches">
+          <p>No matches yet - keep swiping!</p>
         </div>
       </div>
     </app-shell>
@@ -52,6 +57,7 @@ export default {
 
   .match {
     display: flex;
+    border-top: 1px solid #eee;
     border-bottom: 1px solid #eeeeee;
     cursor: pointer;
 
@@ -67,9 +73,10 @@ export default {
     }
   }
 
-  p {
+  .matches-header {
     padding: 20px;
-    background-color: #fff;
+    color: #b40d7a;
+    font-weight: 600;
   }
 }
 
