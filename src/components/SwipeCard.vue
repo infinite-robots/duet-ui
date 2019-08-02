@@ -162,6 +162,7 @@ $cardsTotal: 5;
     height: 100%;
     width: auto;
     object-fit: cover;
+    border: 3px solid #fff;
   }
 }
 .swipe-card-info {
