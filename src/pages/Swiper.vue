@@ -51,13 +51,13 @@ export default {
     return {
       busy: false,
       cards: [
-        {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
+        // {type: 'battle', band1: {name: 'test'}, band2: {name: 'test2'}},
         {name: 'Nine Inch Nails', type: 'normal'},
         {name: 'The Beatles', type: 'normal'},
         {name: 'Gorillaz', type: 'normal'},
-        {type: 'battle', band1: {name: 'test123'}, band2: {name: 'test222'}},
+        // {type: 'battle', band1: {name: 'test123'}, band2: {name: 'test222'}},
         {name: 'Eminem', type: 'normal'},
-        {type: 'battle', band1: {name: 'test11111'}, band2: {name: 'test2123123'}},
+        // {type: 'battle', band1: {name: 'test11111'}, band2: {name: 'test2123123'}},
       ],
       chartOptions: {
         chart: {

@@ -18,6 +18,13 @@ import interact from 'interactjs';
 
 export default {
   name: 'SwipeCard',
+  static: {
+    interactMaxRotation: 15,
+    interactOutOfSightXCoordinate: 500,
+    interactOutOfSightYCoordinate: 600,
+    interactYThreshold: 150,
+    interactXThreshold: 100
+  },
   props: ['card'],
   data() {
     return {
@@ -25,15 +32,16 @@ export default {
       isInteractAnimating: true,
       interactPosition: {
         x: 0,
-        y: 0
+        y: 0,
+        rotation: 0
       },
     }
   },
   computed: {
     transformString() {
       if (!this.isInteractAnimating) {
-        const { x, y } = this.interactPosition;
-        return `translate3D(${x}px, ${y}px, 0)`;
+        const { x, y, rotation } = this.interactPosition;
+        return `translate3D(${x}px, ${y}px, 0) rotate(${rotation}deg)`;
       }
       return null;
     }
@@ -45,14 +53,24 @@ export default {
         this.isInteractAnimating = false;
       },
       onmove: event => {
+
+        const {
+          interactMaxRotation,
+          interactXThreshold
+        } = this.$options.static;
         const x = this.interactPosition.x + event.dx;
         const y = this.interactPosition.y + event.dy;
-        this.interactSetPosition({ x, y });
+
+        let rotation = interactMaxRotation * (x / interactXThreshold);
+
+        if (rotation > interactMaxRotation) rotation = interactMaxRotation;
+        else if (rotation < -interactMaxRotation)
+          rotation = -interactMaxRotation;
+
+        this.interactSetPosition({ x, y, rotation });
       },
       onend: () => {
         const { x } = this.interactPosition;
-
-        console.log(x);
 
         if (x > 120) {
           console.log('accepted')
@@ -71,23 +89,26 @@ export default {
     interact(this.$refs.interactElement).unset();
   },
   methods: {
-    interactSetPosition(coordinates) { 
-      const { x = 0, y = 0 } = coordinates;
-      this.interactPosition = { x, y };
+    interactSetPosition(coordinates) {
+      const { x = 0, y = 0, rotation = 0 } = coordinates;
+      this.interactPosition = { x, y, rotation };
     },
     resetCardPosition() {
       this.isInteractAnimating = true;
-      this.interactSetPosition({ x: 0, y: 0 });
+      this.interactSetPosition({ x: 0, y: 0, rotation: 0 });
     },
     interactUnsetElement() {
       interact(this.$refs.interactElement).unset();
     },
     playCard(like) {
       if (like) {
-        this.interactSetPosition({x: 1000})
+        this.interactSetPosition({
+          x: 1000,
+          rotation: 15
+        });
         this.$emit('cardAccepted');
       } else {
-        this.interactSetPosition({x: -1000})
+        this.interactSetPosition({x: -1000, rotation: -15});
         this.$emit('cardRejected');
       }
       this.interactUnsetElement();
