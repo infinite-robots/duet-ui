@@ -95,7 +95,7 @@ export default {
                 marker: {
                   enabled: false
                 },
-                fillOpacity: 0.25
+                fillOpacity: .65
             },
             column: {
                 pointPadding: 0,
@@ -114,7 +114,8 @@ export default {
         series: [{
           type: 'area',
           name: 'Area',
-          data: [16, 50, 16, 100, 0, 16, 16]
+          data: [16, 50, 16, 100, 0, 16, 16],
+          fillOpacity: .65
         }, 
         // {
         //   type: 'area',
